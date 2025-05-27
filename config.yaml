@@ -3,6 +3,6 @@ rapportfil: "C:\\Users\\saker\\Desktop\\Programmering\\delad_mapp\\deployment_lo
 vms:
   - name: "Ubuntu 64-bit_NY"
     vmx_path: "C:\\Users\\saker\\Desktop\\Programmering\\Programvara - virtualisering\\Virtual Machines\\Ubuntu 64-bit_NY\\Ubuntu 64-bit_NY.vmx"
-    ssh_host: "192.168.14.134"
+    ssh_host: "192.168.50.47"           # Ändra till rätt IP om den ändras!
     ssh_user: "simonvmuser"
     ssh_key_path: "C:\\Users\\saker\\.ssh\\id_ed25519"

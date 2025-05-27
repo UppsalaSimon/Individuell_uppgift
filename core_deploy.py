@@ -48,10 +48,6 @@ def wait_for_ssh(host, port=22, timeout=60):
 
 def connect_ssh(vm, password=None):
     pw = password
-    if pw is None:
-        import getpass
-        pw = getpass.getpass(f"Lösenfras för {vm['ssh_user']}@{vm['ssh_host']}: ")
-
     try:
         key = None
         try:
@@ -184,12 +180,27 @@ def rollback_snapshot(vm, snapshot_name):
         return False
 
 def open_webpage(ssh, url=None):
-    # Om ingen URL anges, öppna Google
     if not url:
         url = "https://www.google.com/"
-    cmd = f'DISPLAY=:0 firefox "{url}" &'
+    xauth = "/run/user/1000/gdm/Xauthority"   # <-- ändrat här!
+    cmd = f'export XAUTHORITY={xauth}; export DISPLAY=:0; firefox "{url}" &'
     stdin, stdout, stderr = ssh.exec_command(cmd)
     out = stdout.read().decode(errors="replace")
     err = stderr.read().decode(errors="replace")
     log(f"Öppnar webbsida: {url}\nstdout: {out}\nstderr: {err}")
     return out, err
+
+def shutdown_vm(vm):
+    exe = CONFIG["vmrun_exe"]
+    if os.path.exists(exe):
+        # Försök soft shutdown först
+        log(f"Försöker mjuk avstängning av VM: {vm['name']}")
+        subprocess.call([exe, "stop", vm["vmx_path"], "soft"])
+        # Vänta upp till 40 sekunder (justera om du vill)
+        time.sleep(20)
+        # Kontrollera om VM fortfarande är igång
+        result = subprocess.run([exe, "list"], capture_output=True, text=True)
+        if vm["vmx_path"] in result.stdout:
+            log("Mjuk avstängning misslyckades, försöker hård avstängning...")
+            subprocess.call([exe, "stop", vm["vmx_path"], "hard"])
+        log(f"🔻 VM {vm['name']} stängd.")

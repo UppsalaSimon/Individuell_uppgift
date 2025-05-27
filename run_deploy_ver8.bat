@@ -1,3 +1,4 @@
 @echo off
-powershell -ExecutionPolicy Bypass -File "run_deploy_ver8.ps1"
+cd /d "C:\Users\saker\Desktop\Programmering\Ind_uppgift_ver8"
+python Ind_uppgift_ver8.py
 pause
