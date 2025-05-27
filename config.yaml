@@ -1,0 +1,8 @@
+vmrun_exe: "C:\\Program Files (x86)\\VMware\\VMware Workstation\\vmrun.exe"
+rapportfil: "C:\\Users\\saker\\Desktop\\Programmering\\delad_mapp\\deployment_log.txt"
+vms:
+  - name: "Ubuntu 64-bit_NY"
+    vmx_path: "C:\\Users\\saker\\Desktop\\Programmering\\Programvara - virtualisering\\Virtual Machines\\Ubuntu 64-bit_NY\\Ubuntu 64-bit_NY.vmx"
+    ssh_host: "192.168.14.134"
+    ssh_user: "simonvmuser"
+    ssh_key_path: "C:\\Users\\saker\\.ssh\\id_ed25519"
